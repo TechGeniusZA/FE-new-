@@ -17,7 +17,7 @@ function App() {
       {/**Routes go here */}
       <Routes >
         <Route path="/" element={<Dashboard />}  />
-        <Route path="/Inventory/SKUBrands" element={<SKUBrands />}  />
+        <Route path="/inventory/SKUBrands" element={<SKUBrands />}  />
         <Route path="/page1" element={<TestPageOne />}  />
         <Route path="/page2" element={<TestPageTwo />}  />
         <Route path="/page3" element={<TestPageThree />}  />

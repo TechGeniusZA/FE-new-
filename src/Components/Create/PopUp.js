@@ -1,87 +1,95 @@
-
-import { Box, Container} from "@mui/system";
+import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { TextField,  Dialog, DialogActions, MenuItem, DialogContent, DialogContentText, DialogTitle, Button, FormControl} from "@mui/material";
-
+import {
+  TextField,
+  Dialog,
+  DialogActions,
+  MenuItem,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  FormControl,
+  Grid,
+} from "@mui/material";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { createSKUBrand } from "../../API/SKU.api";
+import { useFormik } from "formik";
 // import { makeStyles } from "@material-ui/core/styles";
-export default function PopUp() {
+export default function PopUp({setOpen,open}) {
+  const { mutate: CreateSkuBrand } = useMutation(createSKUBrand, {
+    onSuccess: () => {
+      handleClose();
+    },
+  });
 
-  const [name, setName] = useState([])
-  const [selector, setSelector] = useState([])
+  const myForm = useFormik({
+    initialValues: {
+      DisplayName: "",
+      Level: "1",
+    },
+    onSubmit: (values) => {
+      CreateSkuBrand(values);
+    },
+  });
 
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
   
-    const handleClose = () => {
-      setOpen(false);
-    };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    const createSKu = async(e) => {
-      e.preventDefault()
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-      const data = {
-        name,
-        selector, 
-        isActive:true
-
-      }
-        await axios.post("/Inventory/AddEditBrand", 
-        {...data})
-      
-    }
-
-
-
-    
-    
- 
   return (
     <Container>
-        <Button variant="outlined" onClick={handleClickOpen}>
-        Create
-      </Button>
-   
-      <Dialog fullWidth maxWidth ="md" open={open} onClose={handleClose} 
-      >
-        
+    
+
+      <Dialog fullWidth maxWidth="md" open={open} onClose={handleClose}>
         <DialogTitle>Create Sku Brand</DialogTitle>
         <DialogContent>
-          <FormControl onSubmit={createSKu}>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Display Name"
-            type="name"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setName(e.target.value)}
-          />
-        
-          <TextField
-          select
-          fullWidth
-            name="selector"
-          label="selector"
-          id={"selector"}
-          onChange={(e) => setSelector(e.target.value)}
-        >
-          <MenuItem value="#GLOBAL">GLOBAL</MenuItem>
-          <MenuItem value="#SHOPGROUPING">SHOPGROUPING</MenuItem>
-          <MenuItem value="#SHOPSPLIT">SHOPSPLIT</MenuItem>
-        </TextField>
-        </FormControl>
+          <Grid container rowGap={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="DisplayName"
+                label="Display Name"
+                type="name"
+                fullWidth
+                variant="standard"
+                value={myForm.values.DisplayName}
+                onChange={myForm.handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                select
+                size="small"
+                fullWidth
+                name="Level"
+                label="Level"
+                id={"Level"}
+                value={myForm.values.Level}
+                onChange={myForm.handleChange}
+              >
+                <MenuItem value="1">GLOBAL</MenuItem>
+                <MenuItem value="2">SHOPGROUPING</MenuItem>
+                <MenuItem value="3">SHOPSPLIT</MenuItem>
+              </TextField>
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} type="submit">Create</Button>
+          <Button onClick={myForm.submitForm} type="submit">
+            Create
+          </Button>
         </DialogActions>
       </Dialog>
-
     </Container>
-  )
+  );
 }

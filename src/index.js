@@ -6,13 +6,19 @@ import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./Providers/Auth";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
+import { QueryClient,
+  QueryClientProvider} from '@tanstack/react-query'
 import AppTheme from "./Providers/ThemeProvider";
+
+const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AuthProvider>
     <BrowserRouter>
     <ThemeProvider theme={AppTheme}>
+    <QueryClientProvider client={queryClient}>
       <App />
+      </QueryClientProvider>
       </ThemeProvider>
     </BrowserRouter>
   </AuthProvider>

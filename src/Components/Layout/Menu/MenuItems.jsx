@@ -99,7 +99,10 @@ export default function NestedList() {
                         key={child.label}
                         selected={selected === parent.label + child.label}
                         sx={{ pl: 4 }}
-                        onClick={() => setSelected(parent.label + child.label)}
+                        onClick={() => {
+                          setSelected(parent.label + child.label);
+                          navigate(child.route);
+                        }}
                       >
                         {/* Icons if you need them <ListItemIcon>
                         <StarBorder />

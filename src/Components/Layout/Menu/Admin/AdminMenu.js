@@ -1,11 +1,11 @@
 export const AdminMenu =  [
     {
-        label:"Parent3",
+        label:"Inventory",
         route:"route3",
         children:[
             {
-                label:"child1 of Parent3",
-                route:"route3.1"
+                label:"SKU Brands",
+                route:"inventory/SKUBrands"
             },
             {
                 label:"child2 of Parent3",

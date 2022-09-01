@@ -1,6 +1,9 @@
 import { createTheme} from "@mui/material";
 
 const AppTheme = createTheme({
+  typography: {
+    fontSize: 13,
+  },
     palette: {
      primary: {
        light: '#757ce8',
@@ -19,11 +22,7 @@ const AppTheme = createTheme({
        fontSize:10
      }
      },
-    components: {
-      MuiPaper:{
-        
-      }
-    }
+    components: {}
 })
 
 export default AppTheme
