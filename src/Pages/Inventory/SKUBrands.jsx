@@ -68,7 +68,7 @@ function SKUBrands() {
     error,
     refetch,
     status,
-  } = useQuery(["skuBrands", formData.values.filters, "Hello"], getWithFilters);
+  } = useQuery(["skuBrands", formData.values.filters], getWithFilters);
 
   useEffect(() => {
     console.log(status);

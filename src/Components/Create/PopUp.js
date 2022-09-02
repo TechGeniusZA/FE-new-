@@ -12,16 +12,25 @@ import {
   FormControl,
   Grid,
 } from "@mui/material";
-import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation,useQueryClient}  from "@tanstack/react-query";
 import { createSKUBrand } from "../../API/SKU.api";
 import { useFormik } from "formik";
 // import { makeStyles } from "@material-ui/core/styles";
 export default function PopUp({setOpen,open}) {
+  const queryClient = useQueryClient()
   const { mutate: CreateSkuBrand } = useMutation(createSKUBrand, {
     onSuccess: () => {
-      handleClose();
+      // When the SKU brand is created, we invalidate the original query we made on the SKUBrands page. This will trigger react query to pull the data again.
+      // It does a compare and only will re render if the values have changed
+      // You can check the console, it's logging "Called" after you click create
+      //  "SKUBrands is the key that we gave it"
+      queryClient.invalidateQueries("skuBrands")
     },
+    onSettled:()=>{
+     
+      
+      handleClose();
+    }
   });
 
   const myForm = useFormik({
