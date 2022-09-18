@@ -34,7 +34,9 @@ function PackSize(){
     refetch,
     status,
 
-  } = useQuery(["PackSize", formData.values.filters], getPacksizes)
+  } = useQuery(["PackSize", formData.values.filters], getPacksizes.apply,{onSuccess:(d)=>{
+    console.log("packsizes",d)
+  }})
   
   useEffect(() => {
     console.log(status);
@@ -166,7 +168,7 @@ function PackSize(){
 
     <Grid item xs={12}>
         <DataGrid autoHeight
-        rows={PackSize}
+        rows={PackSizes}
         loading={isLoading}
         columns={columns}
         getRowId={(row)=> row.ID}

@@ -22,7 +22,7 @@ import {Inventory} from '@mui/icons-material';
 // #86C328 #ADAEB3
 // Icon mapping. Use this object to map the icons
 const icons = {
-  Inventory : <Inventory sx={{color: "whitesmoke"}} />
+  Inventory : <Inventory sx={{color: "#444545"}} />
 }
 export default function NestedList({ drawerOpen, setDrawerState }) {
   const navigate = useNavigate();
@@ -58,7 +58,14 @@ export default function NestedList({ drawerOpen, setDrawerState }) {
                   justifyContent: drawerOpen ? "initial" : "center",
                   px: 2.5,
                 }}
+                selected={ selected === parent.label}
                 onClick={() => {
+              
+                  if( parent.children.length === 0){
+                
+                    setSelected(parent.label)
+                  }
+                
                   parent.children.length > 0
                     ? handleOpen(parent.label)
                     : navigate(parent.route);

@@ -10,6 +10,7 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useAuth } from '../../Providers/Auth';
+import { IconButton } from '@mui/material';
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -64,18 +65,18 @@ export default function UserButton() {
 
   return (
     <div>
-      <Button
+      <IconButton
         id="demo-customized-button"
         aria-controls={open ? 'demo-customized-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        variant="contained"
+        //variant="contained"
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
+       
       >
-        {auth?.user?.email || "Test"}
-      </Button>
+        <KeyboardArrowDownIcon sx={{color: "black"}}/>
+      </IconButton>
       <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{

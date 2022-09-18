@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -22,7 +23,8 @@ import MenuItems from "./Menu/MenuItems";
 import { AppName } from "../../Constants/AppConstants";
 import UserButton from "../General/UserButton";
 import {Logo} from '../../Assets/AssetImports'
-const drawerWidth = 240;
+import { Grid } from '@mui/material';
+const drawerWidth = 260;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -57,6 +59,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
+ 
   zIndex: theme.zIndex.drawer + 1,
   backgroundColor:"white",
   color:"black",
@@ -97,7 +100,8 @@ export default function MiniDrawer({children}) {
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    open === true ?   setOpen(false) :  setOpen(true)
+  
   };
 
   const handleDrawerClose = () => {
@@ -107,7 +111,7 @@ export default function MiniDrawer({children}) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{boxShadow:"rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px"}}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -116,7 +120,7 @@ export default function MiniDrawer({children}) {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(open && { display: 'none' }),
+             
             }}
           >
             <MenuIcon />
@@ -125,29 +129,44 @@ export default function MiniDrawer({children}) {
           <Typography variant="h6" noWrap component="div">
             {AppName}
           </Typography>
-          <UserButton />
+         
           </div>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
       <DrawerHeader>
-         
-
+         {/**Content above the nav menu  TODO: MOVE TO ITS OWN COMPONENT */}
+        <Grid container sx={{display:"flex", alignItems:"center", margin:"2px 5px 5px 5px  " , justifyContent:"flex-start"}} >
+            <Grid item xs={3}>
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+            </Grid>
+            <Grid item xs={7}>
+              <Grid container >
+              <Grid item xs={12}><Typography sx={{fontWeight:"bold"}} >Ryan Zeelie</Typography> </Grid>
+              <Grid item xs={12}><Typography sx={{fontSize:"13px"}}>System Admin</Typography></Grid>
+              </Grid>
+              </Grid>
+              <Grid item xs={2}>
+              <UserButton />
+              </Grid>
+        </Grid>
+        
+        
          
          {/* {open && <img style={{maxWidth:"160px",borderRadius:"10px"}} src={Logo}  />}  */}
-          <IconButton style={{maxWidth:"fit-content"}} onClick={handleDrawerClose}>
+          {/* <IconButton style={{maxWidth:"fit-content"}} onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
             )}
-          </IconButton>
+          </IconButton> */}
        
         </DrawerHeader>
         <Divider />
       <MenuItems drawerOpen = {open} setDrawerState={setOpen}/>
       </Drawer>
-      <Box component="main" sx={{minHeight:"100vh", flexGrow: 1, p: 3, backgroundColor:"#F7F7F7" }}>
+      <Box component="main" sx={{minHeight:"100vh", flexGrow: 1, p: 3, backgroundColor:"#F5F7FD" }}>
         <DrawerHeader />
         {children}
       </Box>

@@ -17,7 +17,7 @@ import {
     return (
       <div style={{borderRadius:2,width:"100%",height:"60px",display:"flex",justifyContent:"space-between",padding:5}}>
         <div>
-        <Button onClick={create} sx={{border:"none",fontWeight:"bold"}}  startIcon={<AddCircle />}>
+        <Button variant="contained" onClick={create} sx={{border:"none",fontWeight:"bold"}}  startIcon={<AddCircle />}>
         Create
       </Button>
         </div>

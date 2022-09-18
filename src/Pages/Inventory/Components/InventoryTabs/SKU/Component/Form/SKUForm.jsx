@@ -53,7 +53,12 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
   //Purchase Category query
   const { data: purchaseCategory,isLoading:PC } = useQuery(
     ["PurchaseCategory", { ActiveStatus: 0 }],
-    PurchaseCategory
+    PurchaseCategory,{
+      onSuccess:(d)=>{
+        
+        console.log((d))
+      }
+    }
   );
 //SKU Brand query
   const { data: skuBrand,isLoading:SKB } = useQuery(
@@ -61,9 +66,13 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
     SKUBrands
   );
  //Unit Of Measure query
-  const { data: unitOM,isLoading:Uni} = useQuery(
+  const { data: unitOM ,isLoading:Uni} = useQuery(
     ["unitOM"],
-    UnitOfMeasure
+    UnitOfMeasure,{
+      onSuccess:(d)=>{
+        console.log("UOOM",d)
+      }
+    }
   );
 
 
@@ -89,19 +98,20 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
     useFormik({
       initialValues: {
         ID: "0",
-        DisplayName:"",
-        Level:"0",
-        PurchaseCategory:"0",
+        DisplayName:["","","","","",""],
+        Level:" ",
+        PurchaseCategory:" ",
         ProdServ:"0",
-        SKUBrand:"0",
+        SKUBrand:" ",
         BrandFeature1:"",
         BrandFeature2:"",
-        FizedQuantity:"0",
+        FizedQuantity:" ",
         Quantity:"",
-        UoM:"0",
-        Packaging:"0",
-        MainSub:"0",
-        returnable:"0",
+        
+        UoM:" ",
+        Packaging:" ",
+        MainSub:" ",
+        returnable:" ",
         VAT:"0",
 
       },
@@ -117,7 +127,7 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
       if(selectedForUpdate != null){
           console.log(selectedForUpdate)
         setFieldValue("ID",selectedForUpdate.ID)
-        setFieldValue("DisplayName",selectedForUpdate.DisplayName)
+        setFieldValue("DisplayName",selectedForUpdate.DisplayName.split(" "))
         setFieldValue("IsActive",selectedForUpdate.IsActive)
         setFieldValue("Level",selectedForUpdate.Level)
         setFieldValue("PurchaseCategory",selectedForUpdate.PurchaseCategory)
@@ -147,10 +157,10 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           type="name"
           fullWidth
           size="small"
-          error={!!errors.DisplayName}
-          helperText={errors.DisplayName}
-          value={values.DisplayName}
-          onChange={handleChange}
+          defaultValue={""}
+          value={values.DisplayName.join(" ")}
+        
+          disabled
         />
       </Grid>
       <Grid item xs={12}>
@@ -164,9 +174,10 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           value={values.Level}
           onChange={handleChange}
         >
-          <MenuItem value="1">GLOBAL</MenuItem>
-          <MenuItem value="2">SHOPGROUPING</MenuItem>
-          <MenuItem value="3">SHOPSPLIT</MenuItem>
+            <MenuItem value=" ">Select</MenuItem>
+          <MenuItem value="1">Global</MenuItem>
+          <MenuItem value="2">Shop Grouping</MenuItem>
+          <MenuItem value="3">Shop Split</MenuItem>
         </TextField>
       </Grid>
       
@@ -218,7 +229,7 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
         </Grid>
       )}
 
-{/* <Grid item xs={12}>
+<Grid item xs={12}>
           <TextField
             size="small"
             select
@@ -231,13 +242,13 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           >
             <MenuItem value=" ">Select</MenuItem>
             {purchaseCategory &&
-              purchaseCategory.data.map((category) => (
+              purchaseCategory.map((category) => (
                 <MenuItem key={category.id} value={category.id}>
                   {category.displayName}
                 </MenuItem>
               ))}
           </TextField>
-        </Grid> */}
+        </Grid>
 <Grid item xs={12}>
           <TextField
             size="small"
@@ -247,17 +258,23 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
             name="UoM"
             label="Unit Of Measure"
             value={values.UoM}
-            onChange={handleChange}
+            onChange={(e)=>{
+              handleChange(e)
+              let newName = values.DisplayName
+              newName[4]= e.target.value
+              setFieldValue("DisplayName", newName)
+            }}
           >
             <MenuItem value=" ">Select</MenuItem>
             {unitOM &&
-              unitOM.data.map((unit) => (
+              unitOM.map((unit) => (
                 <MenuItem key={unit.id} value={unit.id}>
                   {unit.displayName}
                 </MenuItem>
               ))}
           </TextField>
         </Grid>
+      
 
       <Grid item xs={12}>
       <TextField
@@ -283,7 +300,12 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
             name="SKUBrand"
             label="SKU Brand"
             value={values.SKUBrand}
-            onChange={handleChange}
+            onChange={(e)=>{
+              handleChange(e)
+              let newName = values.DisplayName
+              newName[0]= skuBrand.data.find(x=>x.ID === e.target.value ).DisplayName
+              setFieldValue("DisplayName", newName)
+            }}
           >
             <MenuItem value=" ">Select</MenuItem>
             {skuBrand &&
@@ -308,7 +330,12 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           error={!!errors.BrandFeature1}
           helperText={errors.BrandFeature1}
           value={values.BrandFeature1}
-          onChange={handleChange}
+          onChange={(e)=>{
+            handleChange(e)
+            let newName = values.DisplayName
+            newName[1]= e.target.value
+            setFieldValue("DisplayName", newName)
+          }}
         />
       </Grid>
       <Grid item xs={12}>
@@ -323,7 +350,12 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           error={!!errors.BrandFeature2}
           helperText={errors.BrandFeature2}
           value={values.BrandFeature2}
-          onChange={handleChange}
+          onChange={(e)=>{
+            handleChange(e)
+            let newName = values.DisplayName
+            newName[2]= e.target.value
+            setFieldValue("DisplayName", newName)
+          }}
         />
       </Grid>
 
@@ -354,10 +386,40 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           error={!!errors.Quantity}
           helperText={errors.Quantity}
           value={values.Quantity}
-          onChange={handleChange}
+          onChange={(e)=>{
+            handleChange(e)
+            let newName = values.DisplayName
+            newName[4]= e.target.value
+            setFieldValue("DisplayName", newName)
+          }}
         />
       </Grid>
-
+  {/** Packaging*/}
+  <Grid item xs={12}>
+          <TextField
+            size="small"
+            select
+            fullWidth
+            defaultValue={""}
+            name="Packaging"
+            label="Packaging"
+            value={values.Packaging}
+            onChange={(e)=>{
+              handleChange(e)
+              let newName = values.DisplayName
+              newName[5]= e.target.value
+              setFieldValue("DisplayName", newName)
+            }}
+          >
+            <MenuItem value=" ">Select</MenuItem>
+            {unitOM &&
+              unitOM.map((unit) => (
+                <MenuItem key={unit.id} value={unit.id}>
+                  {unit.displayName}
+                </MenuItem>
+              ))}
+          </TextField>
+        </Grid>
       <Grid item xs={12}>
       <TextField
             select

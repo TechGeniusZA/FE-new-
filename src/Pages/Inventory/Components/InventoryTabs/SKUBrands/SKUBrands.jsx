@@ -141,6 +141,7 @@ function SKUBrands() {
         />
       </Grid>
 
+      {/* <PopUp setOpen={setOpen} open={open}></PopUp> */}
       </PageContainer>
   );
 }
