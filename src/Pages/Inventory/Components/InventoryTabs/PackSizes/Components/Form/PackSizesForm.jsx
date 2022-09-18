@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ShopGrouping, ShopSplits } from "../../../../../../../API/api";
+import { ShopGrouping, ShopSplits, PurchaseCategory } from "../../../../../../../API/api";
 
 import ButtonGroup from "@mui/material/ButtonGroup";
 import {
@@ -34,22 +34,21 @@ const editAddBrand = async (data) => {
   
   });
 
- let res = await axios.post("Inventory/AddEditBrand", makingItFormDataLikeOldSchool);
+ let res = await axios.post("Inventory/EditSKUPacksize", makingItFormDataLikeOldSchool);
    return   res.data;
 };
 function PackSizesForm({setOpen,selectedForUpdate=null}) {
   const queryClient = useQueryClient();
-  // Shop Group query
-  const { data: shopGrouping,isLoading:SGL } = useQuery(
-    ["Shopgrouping", { Industry: 0, Client: 0, Active: 0 }],
-    ShopGrouping
-  );
-
-  // Shop Split  query
-  const { data: shopSplits,isLoading:SSL } = useQuery(
-    ["Shopsplits", { Client: 0, ShopGrouping: 0, Location: 0, Active: 0 }],
-    ShopSplits
-  );
+  
+    //Purchase Category query
+    const { data: purchaseCategory,isLoading:PC } = useQuery(
+      ["PurchaseCategory", { ActiveStatus: 0 }],
+      PurchaseCategory,{
+        onSuccess:(d)=>{
+          console.log((d))
+        }
+      }
+    );
 
   // Mutation
   const { mutate: editUpdateSKU } = useMutation(editAddBrand, {
@@ -69,9 +68,7 @@ function PackSizesForm({setOpen,selectedForUpdate=null}) {
     }
   
   });
-  //
-  // Form
-  //DisplayName=AnotherTestt&ID=12&IsActive=true&Level=1&ShopSplitID=&ShopGroupingID=
+
   const { errors, values, setFieldValue, isValid, submitForm, handleChange } =
     useFormik({
       initialValues: {
@@ -103,21 +100,26 @@ function PackSizesForm({setOpen,selectedForUpdate=null}) {
   // Shop SPLIT  = 3
   return (
     <>
-    <Grid item xs={12}>
-        <TextField
-          select
-          size="small"
-          fullWidth
-          name="Category"
-          label="Purchase Category"
-
-          value={values.Category}
-          onChange={handleChange}
-        >
-          <MenuItem value="1">TEST</MenuItem>
-          
-        </TextField>
-      </Grid>
+   <Grid item xs={12}>
+          <TextField
+            size="small"
+            select
+            fullWidth
+            defaultValue={""}
+            name="PurchaseCategory"
+            label="Purchase Category"
+            value={values.PurchaseCategory}
+            onChange={handleChange}
+          >
+            <MenuItem value=" ">Select</MenuItem>
+            {purchaseCategory &&
+              purchaseCategory.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.displayName}
+                </MenuItem>
+              ))}
+          </TextField>
+        </Grid>
      <Grid container rowGap={2}>
       <Grid item xs={12}>
         <TextField

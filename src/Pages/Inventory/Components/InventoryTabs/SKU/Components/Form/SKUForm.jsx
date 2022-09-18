@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ShopGrouping, ShopSplits, SKUBrands, PurchaseCategory, UnitOfMeasure } from "../../../../../../../API/api";
+import { ShopGrouping, ShopSplits, SKUBrands, PurchaseCategory, UnitOfMeasure, Packaging } from "../../../../../../../API/api";
 // import { SkuBrandValidation } from "./Validation";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import {
@@ -64,6 +64,11 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
   const { data: skuBrand,isLoading:SKB } = useQuery(
     ["SKUBrand", {ShopID: 0, Level: 0, Active: 0 }],
     SKUBrands
+  );
+  //SKU Packaging query
+  const { data: packaging,isLoading:PKG } = useQuery(
+    ["Packaging", { ActiveStatus: 0 }],
+    Packaging
   );
  //Unit Of Measure query
   const { data: unitOM ,isLoading:Uni} = useQuery(
@@ -249,31 +254,7 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
               ))}
           </TextField>
         </Grid>
-<Grid item xs={12}>
-          <TextField
-            size="small"
-            select
-            fullWidth
-            defaultValue={""}
-            name="UoM"
-            label="Unit Of Measure"
-            value={values.UoM}
-            onChange={(e)=>{
-              handleChange(e)
-              let newName = values.DisplayName
-              newName[4]= e.target.value
-              setFieldValue("DisplayName", newName)
-            }}
-          >
-            <MenuItem value=" ">Select</MenuItem>
-            {unitOM &&
-              unitOM.map((unit) => (
-                <MenuItem key={unit.id} value={unit.id}>
-                  {unit.displayName}
-                </MenuItem>
-              ))}
-          </TextField>
-        </Grid>
+
       
 
       <Grid item xs={12}>
@@ -317,7 +298,8 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           </TextField>
         </Grid>
 
-
+        {values.ProdServ == 0 && (
+    <>
       <Grid item xs={12}>
         <TextField
           autoFocus
@@ -338,6 +320,7 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           }}
         />
       </Grid>
+      
       <Grid item xs={12}>
         <TextField
           autoFocus
@@ -394,6 +377,31 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           }}
         />
       </Grid>
+      <Grid item xs={12}>
+          <TextField
+            size="small"
+            select
+            fullWidth
+            defaultValue={""}
+            name="UoM"
+            label="Unit Of Measure"
+            value={values.UoM}
+            onChange={(e)=>{
+              handleChange(e)
+              let newName = values.DisplayName
+              newName[4]= e.target.value
+              setFieldValue("DisplayName", newName)
+            }}
+          >
+            <MenuItem value=" ">Select</MenuItem>
+            {unitOM &&
+              unitOM.map((unit) => (
+                <MenuItem key={unit.id} value={unit.id}>
+                  {unit.displayName}
+                </MenuItem>
+              ))}
+          </TextField>
+        </Grid>
   {/** Packaging*/}
   <Grid item xs={12}>
           <TextField
@@ -412,10 +420,10 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
             }}
           >
             <MenuItem value=" ">Select</MenuItem>
-            {unitOM &&
-              unitOM.map((unit) => (
-                <MenuItem key={unit.id} value={unit.id}>
-                  {unit.displayName}
+            {packaging &&
+              packaging.data.map((pack) => (
+                <MenuItem key={pack.ID} value={pack.ID}>
+                  {pack.DisplayName}
                 </MenuItem>
               ))}
           </TextField>
@@ -450,6 +458,12 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
             <MenuItem value="1">Not Returnable</MenuItem>
           </TextField>
       </Grid>
+      </>
+      )}
+
+
+
+
       <Grid item xs={12}>
       <TextField
             select

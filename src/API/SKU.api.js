@@ -97,7 +97,7 @@ export const skuFilters = async ({queryKey})=>{
 
     const res = await axios.get(`/Inventory/GetSKUs?DisplayName=${DisplayName}&Category=${Category}&Brand=${Brand}&Product=${Product}&ActiveStatus=${Active}&MainItemFilter=1&ReturnableItemFilter=ALL`)
     const packageData = res.data
-    console.log(packageData.data)
+    console.log("SKU", packageData.data)
     return packageData.data
 }
 export const createSKU = async(myForm)=>{

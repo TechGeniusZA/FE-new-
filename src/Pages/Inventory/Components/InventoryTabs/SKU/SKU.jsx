@@ -16,7 +16,7 @@ import EditButton from "../../../../../Components/DataGrid/CustomRenders/EditBut
 import ActivateButton from "../../../../../Components/DataGrid/CustomRenders/ActivateButton";
 import TableChip from "../../../../../Components/General/TableChip";
 import FormModal from "../../../../../Components/General/FormModal";
-import SKUForm from "./Component/Form/SKUForm";
+import SKUForm from "./Components/Form/SKUForm";
 
 
 

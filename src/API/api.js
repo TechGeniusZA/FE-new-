@@ -137,6 +137,39 @@ export const UnitOfMeasure = async () =>{
       
      } 
 }
+export const Packaging = async ({queryKey}) =>{
+   try {
+      console.log(queryKey)
+      const {ActiveStatus} = queryKey[1]
+   
+  
+      const res = await axios.get(`/Inventory/GetSKUPackaging?activeStatus=${ActiveStatus}`)
+      console.log(res)
+      const data = res.data
+      console.log(data)
+      return data
+      
+     } catch (error) {
+      console.log(error)
+      
+     } 
+}
+
+export const SKU = async ({queryKey}) =>{
+   try {
+      console.log("packaged called")
+      const{Active, Category, Product, DisplayName, Brand} = queryKey[1]
+  
+      const res = await axios.get(`/Inventory/GetSKUs?DisplayName=${DisplayName}&Category=${Category}&Brand=${Brand}&Product=${Product}&ActiveStatus=${Active}&MainItemFilter=1&ReturnableItemFilter=ALL`)
+      const packageData = res.data
+      console.log("SKU", packageData.data)
+      return packageData.data
+      
+     } catch (error) {
+      console.log(error)
+      
+     } 
+}
 //MarketPlace
 
 export const SkuPrices= async ({queryKey}) =>{

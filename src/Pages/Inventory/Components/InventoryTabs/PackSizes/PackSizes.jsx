@@ -10,7 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ClearIcon from '@mui/icons-material/Clear';
 import CustomToolBar from "../../../../../Components/DataGrid/CustomToolbar";
 import FormModal from "../../../../../Components/General/FormModal";
-import PackSizesForm from "./Component/Form/PackSizesForm";
+import PackSizesForm from "./Components/Form/PackSizesForm";
 import EditButton from "../../../../../Components/DataGrid/CustomRenders/EditButton";
 import ActivateButton from "../../../../../Components/DataGrid/CustomRenders/ActivateButton";
 

@@ -1,8 +1,9 @@
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ShopGrouping, ShopSplits } from "../../../../../../../API/api";
-
+import { PurchaseCategory } from "../../../../../../../API/api";
+import { skuFilters } from "../../../../../../../API/SKU.api";
+import Autocomplete from '@mui/material/Autocomplete';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import {
   TextField,
@@ -39,17 +40,26 @@ const editAddBrand = async (data) => {
 };
 function BundlesForm({setOpen,selectedForUpdate=null}) {
   const queryClient = useQueryClient();
-  // Shop Group query
-  const { data: shopGrouping,isLoading:SGL } = useQuery(
-    ["Shopgrouping", { Industry: 0, Client: 0, Active: 0 }],
-    ShopGrouping
+
+  const { data: purchaseCategory,isLoading:PC } = useQuery(
+    ["PurchaseCategory", { ActiveStatus: 0 }],
+    PurchaseCategory,{
+      onSuccess:(d)=>{
+        console.log((d))
+      }
+    }
+  );
+  const { data: sku,isLoading:uks} = useQuery(
+    ["SKU", { Active: 0, Category:0, Product:0, DisplayName:0, Brand:0}],
+    skuFilters, {
+      onSuccess:(d)=>{
+        console.log((d))
+        console.log("sku", sku)
+      }
+      
+    }
   );
 
-  // Shop Split  query
-  const { data: shopSplits,isLoading:SSL } = useQuery(
-    ["Shopsplits", { Client: 0, ShopGrouping: 0, Location: 0, Active: 0 }],
-    ShopSplits
-  );
 
   // Mutation
   const { mutate: editUpdateSKU } = useMutation(editAddBrand, {
@@ -107,36 +117,37 @@ function BundlesForm({setOpen,selectedForUpdate=null}) {
   // Shop SPLIT  = 3
   return (
     <>
-    <Grid item xs={12}>
-        <TextField
-          select
-          size="small"
-          fullWidth
-          name="Category"
-          label="Purchase Category"
-
-          value={values.Category}
-          onChange={handleChange}
-        >
-          <MenuItem value="1">TEST</MenuItem>
-          
-        </TextField>
-      </Grid>
+       <Grid item xs={12}>
+          <TextField
+            size="small"
+            select
+            fullWidth
+            defaultValue={""}
+            name="PurchaseCategory"
+            label="Purchase Category"
+            value={values.PurchaseCategory}
+            onChange={handleChange}
+          >
+            <MenuItem value=" ">Select</MenuItem>
+            {purchaseCategory &&
+              purchaseCategory.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.displayName}
+                </MenuItem>
+              ))}
+          </TextField>
+        </Grid>
      <Grid container rowGap={2}>
-      <Grid item xs={12}>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="SKU"
-          label="SKU"
-          type="name"
-          fullWidth
-          size="small"
-          error={!!errors.SKU}
-          helperText={errors.SKU}
-          value={values.SKU}
-          onChange={handleChange}
-        />
+     <Grid item xs={12}>
+  
+     <Autocomplete
+      disablePortal
+      id="combo-box-demo" 
+      options={sku}
+      value={values.MainSku}
+      sx={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Movie" />}
+    />
       </Grid>
 
       <Grid item xs={12}>
@@ -154,21 +165,7 @@ function BundlesForm({setOpen,selectedForUpdate=null}) {
         </TextField>
       </Grid>
 
-      <Grid item xs={12}>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="MainSku"
-          label="Main SKU"
-          type="name"
-          fullWidth
-          size="small"
-          error={!!errors.MainSku}
-          helperText={errors.MainSku}
-          value={values.MainSku}
-          onChange={handleChange}
-        />
-      </Grid>
+      
       <Grid item xs={12}>
         <TextField
           autoFocus
