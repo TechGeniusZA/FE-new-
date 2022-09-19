@@ -6,7 +6,9 @@ const AppTheme = createTheme({
   typography: {
     allVariants: {
       fontFamily: "'Poppins'",
-      textTransform: "none",
+      fontWeightLight: 200,
+      fontWeightRegular: 400,
+      fontWeightMedium: "bold",
       color: "#444545",
     },
   },
@@ -14,7 +16,7 @@ const AppTheme = createTheme({
     primary: {
       light: "#757ce8",
       main: "#42a5f5",
-      dark: "#002884",
+      dark: "#1976d2",
       contrastText: "#fff",
     },
     secondary: {
@@ -28,6 +30,24 @@ const AppTheme = createTheme({
     },
   },
   components: {
+
+MuiTextField:{
+  styleOverrides:{
+    root:{
+      boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 18px",
+    }
+  },
+  variants: [ 
+        {
+          props: {  disabled: true }, 
+          style: {
+       
+           
+          }
+        }
+      ]
+},
+
   MuiAccordion:{
     styleOverrides:{
       root:{
@@ -91,7 +111,24 @@ const AppTheme = createTheme({
             borderRadius: 4,
             borderBottom: 1,
           },
-
+          
+          "& .MuiDataGrid-columnHeader:focus": {
+            border:"none !important",
+            outline: "none !important"
+          },
+          "& .MuiDataGrid-columnHeader:hover": {
+            border:"none !important",
+            outline: "none !important"
+          },
+          "& .MuiDataGrid-columnHeader:active": {
+            border:"none !important",
+            outline: "none !important"
+          },
+          "&  .MuiDataGrid-columnHeader--sorted": {
+            border:"none !important",
+            outline: "none !important"
+          },
+         
           // Edit each cell
           "& .MuiDataGrid-cell": {
             fontSize: "13px",
@@ -99,8 +136,12 @@ const AppTheme = createTheme({
           '& .MuiDataGrid-cell:focus': {
             outline: 0,
           },
-          "& .MuiDataGrid-columnHeaders": {
-            fontWeight: "bold",
+          '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+           fontWeight:"bolder !important",
+           color:"black"
+            // borderRight: `1px solid ${
+            //   theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
+            // 
           },
           "& .MuiDataGrid-row.even": {
             backgroundColor: "WhiteSmoke",

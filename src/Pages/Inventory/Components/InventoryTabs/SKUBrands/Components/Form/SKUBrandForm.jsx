@@ -20,6 +20,7 @@ import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 //import { updateSkuBrand } from "../../API/SKU.api";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
+import FormSkeleton from "../../../../../../../Components/General/FormSkeleton";
 
 const editAddBrand = async (data) => {
   
@@ -106,7 +107,7 @@ function SKUBrandForm({setOpen,selectedForUpdate=null}) {
   // Shop SPLIT  = 3
   return (
     <>
-  {(!SGL & !SSL) &&
+  { (!SGL & !SSL) ? 
      <Grid container rowGap={2}>
       <Grid item xs={12}>
         <TextField
@@ -193,9 +194,9 @@ function SKUBrandForm({setOpen,selectedForUpdate=null}) {
           variant="spaced"
           aria-label="outlined primary button group"
         >
-          <Button  onClick={submitForm} color="success">Save</Button>
+          <Button  variant="contained"  onClick={submitForm} color="success">Save</Button>
           <Button
-            sx={{ backgroundColor: "red", color: "white" }}
+           color="error"
             variant="contained"
             onClick={()=>{
               setOpen(false)
@@ -205,7 +206,7 @@ function SKUBrandForm({setOpen,selectedForUpdate=null}) {
           </Button>
         </ButtonGroup>
       </Grid>
-    </Grid>
+    </Grid> :<FormSkeleton /> 
   }</>
   );
 }

@@ -137,7 +137,16 @@ function SKUBrands() {
           getRowHeight={() => 'auto'}
           getRowId={(row) => row.ID}
           onCellEditStop={(_, e) => console.log(e.target)}
-          
+          initialState={{
+            sorting: {
+              sortModel: [
+                {
+                  field: 'DisplayName',
+                  sort: 'asc',
+                },
+              ],
+            },
+          }}
         />
       </Grid>
 

@@ -13,7 +13,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
 import { AdminMenu } from "./Admin/AdminMenu";
 import { StandardMenu } from "./Standard/StandardMenu";
-import { Divider, ListItem } from "@mui/material";
+import { Divider, ListItem, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 // Icon imports
@@ -82,9 +82,9 @@ export default function NestedList({ drawerOpen, setDrawerState }) {
                  {/* <StarBorder  sx={{color: "#FC0"}} /> */}
                 </ListItemIcon>
                 <ListItemText
-                  primary={parent.label}
+               
                   sx={{ opacity: drawerOpen ? 1 : 0 }}
-                />
+                > <Typography>{parent.label}</Typography></ListItemText>
                 {parent.children.length > 0 ? (
                   drawerOpen ? (
                     open === parent.label ? (

@@ -199,8 +199,8 @@ function SKU() {
   
 
   return (
-    <Grid container rowGap={2}>
-      <FormModal setOpen={setOpen} open={open} label={"Create SKU Brand"}>
+    <Grid container rowGap={2} >
+      <FormModal setOpen={setOpen} open={open} label={"Create SKU"}>
       {/** Pass form to the modal */}
       <SKUForm selectedForUpdate={selectedForUpdate} setOpen={setOpen}/>
     </FormModal>

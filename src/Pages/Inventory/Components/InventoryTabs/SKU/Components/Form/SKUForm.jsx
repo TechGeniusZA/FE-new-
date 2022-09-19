@@ -152,23 +152,24 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
     },[selectedForUpdate])
   return (
     <>
-     <Grid container rowGap={2}>
+     <Grid container rowGap={2} columnSpacing={10}>
       <Grid item xs={12}>
         <TextField
           autoFocus
           margin="dense"
           id="DisplayName"
           label="Display Name"
+          placeholder="Auto Generated"
           type="name"
           fullWidth
           size="small"
-          defaultValue={""}
-          value={values.DisplayName.join(" ")}
+          
+          value={values.DisplayName.join("") === "" ? "Auto Generated" :values.DisplayName.join(" ") }
         
           disabled
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <TextField
           select
           size="small"
@@ -178,6 +179,7 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           id={"Level"}
           value={values.Level}
           onChange={handleChange}
+          margin="dense"
         >
             <MenuItem value=" ">Select</MenuItem>
           <MenuItem value="1">Global</MenuItem>
@@ -187,9 +189,10 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
       </Grid>
       
       {values.Level == 2 && (
-        <Grid item xs={12}>
+        <Grid item xs={6}>
         <TextField
           size="small"
+          margin="dense"
           select
           fullWidth
           defaultValue={""}
@@ -212,10 +215,11 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
 
       {/** SHOP SPLIT FORM */}
       {values.Level ==3 && (
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <TextField
             size="small"
             select
+            margin="dense"
             fullWidth
             name="ShopSplitID"
             label={"Shop Split"}
@@ -234,10 +238,11 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
         </Grid>
       )}
 
-<Grid item xs={12}>
+<Grid item xs={6}>
           <TextField
             size="small"
             select
+            margin="dense"
             fullWidth
             defaultValue={""}
             name="PurchaseCategory"
@@ -257,9 +262,10 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
 
       
 
-      <Grid item xs={12}>
+      <Grid item xs={6}>
       <TextField
             select
+            margin="dense"
             size="small"
             fullWidth
             name="ProdServ"
@@ -272,10 +278,11 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
             <MenuItem value="1">Service</MenuItem>
           </TextField>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
           <TextField
             size="small"
             select
+            margin="dense"
             fullWidth
             defaultValue={""}
             name="SKUBrand"
@@ -300,7 +307,7 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
 
         {values.ProdServ == 0 && (
     <>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <TextField
           autoFocus
           margin="dense"
@@ -321,7 +328,7 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
         />
       </Grid>
       
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <TextField
           autoFocus
           margin="dense"
@@ -342,9 +349,10 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
         />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={6}>
       <TextField
             select
+            margin="dense"
             size="small"
             fullWidth
             name="FizedQuantity"
@@ -357,7 +365,7 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
             <MenuItem value="1">Not Fixed</MenuItem>
           </TextField>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <TextField
           autoFocus
           margin="dense"
@@ -377,10 +385,11 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           }}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
           <TextField
             size="small"
             select
+            margin="dense"
             fullWidth
             defaultValue={""}
             name="UoM"
@@ -403,10 +412,11 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           </TextField>
         </Grid>
   {/** Packaging*/}
-  <Grid item xs={12}>
+  <Grid item xs={6}>
           <TextField
             size="small"
             select
+            margin="dense"
             fullWidth
             defaultValue={""}
             name="Packaging"
@@ -428,10 +438,11 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
               ))}
           </TextField>
         </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
       <TextField
             select
             size="small"
+            margin="dense"
             fullWidth
             name="MainSub"
             label="Main / Sub Item"
@@ -443,9 +454,10 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
             <MenuItem value="1">Sub</MenuItem>
           </TextField>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
       <TextField
             select
+            margin="dense"
             size="small"
             fullWidth
             name="returnable"
@@ -464,9 +476,10 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
 
 
 
-      <Grid item xs={12}>
+      <Grid item xs={6}>
       <TextField
             select
+            margin="dense"
             size="small"
             fullWidth
             name="VAT"
@@ -490,9 +503,9 @@ function SKUForm({setOpen,selectedForUpdate=null}) {
           variant="spaced"
           aria-label="outlined primary button group"
         >
-          <Button  onClick={submitForm} color="success">Save</Button>
+          <Button  variant="contained" onClick={submitForm} color="success">Save</Button>
           <Button
-            sx={{ backgroundColor: "red", color: "white" }}
+            color="error"
             variant="contained"
             onClick={()=>{
               setOpen(false)

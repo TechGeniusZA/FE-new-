@@ -109,9 +109,9 @@ function SKUPackagingForm({setOpen,selectedForUpdate=null}) {
           variant="spaced"
           aria-label="outlined primary button group"
         >
-          <Button  onClick={submitForm} color="success">Save</Button>
+          <Button variant="contained"  onClick={submitForm} color="success">Save</Button>
           <Button
-            sx={{ backgroundColor: "red", color: "white" }}
+            color="error"
             variant="contained"
             onClick={()=>{
               setOpen(false)

@@ -72,7 +72,7 @@ function PurchaseCategory() {
     
       <ContentContainer> 
         <Grid item xs={12}>
-      <Button  sx={{border:"none",fontWeight:"bold"}}  startIcon={<AddCircle />}>
+      <Button  sx={{border:"none",fontWeight:"bold"}} variant="contained"  startIcon={<AddCircle />}>
         Create
       </Button></Grid>
       <Grid item xs={12}  >
