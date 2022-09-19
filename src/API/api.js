@@ -94,7 +94,7 @@ export const SKUBrands = async ({queryKey}) =>{
       console.log(queryKey)
       const {ShopID, Level,  Active} = queryKey[1]
   
-      const res = await axios.get(`/Inventory/GetSKUBrands?ActiveStatus=${Active}&ShopID=${ShopID}&Level=${Level}`)
+      const res = await axios.get(`/api/inventory/GetSKUBrands?ActiveStatus=${Active}&ShopID=${ShopID}&Level=${Level}`)
       console.log(res)
       const data = res.data
       console.log(data)
@@ -111,7 +111,7 @@ export const PurchaseCategory = async ({queryKey}) =>{
       console.log(queryKey)
       const {ActiveStatus} = queryKey[1]
   
-      const res = await axios.get(`/Inventory/GetSKUCategoriesTree?ActiveStatus=${ActiveStatus}`)
+      const res = await axios.get(`/api/inventory/GetSKUCategoriesTree?ActiveStatus=${ActiveStatus}`)
       console.log(res)
       const data = res.data
       console.log(data)
@@ -126,7 +126,7 @@ export const UnitOfMeasure = async () =>{
    try {
    
   
-      const res = await axios.get(`/Inventory/GetUoMTree`)
+      const res = await axios.get(`api/inventory/GetUoMTree`)
       console.log(res)
       const data = res.data
       console.log(data)
@@ -143,7 +143,7 @@ export const Packaging = async ({queryKey}) =>{
       const {ActiveStatus} = queryKey[1]
    
   
-      const res = await axios.get(`/Inventory/GetSKUPackaging?activeStatus=${ActiveStatus}`)
+      const res = await axios.get(`/api/inventory/GetSKUPackaging?activeStatus=${ActiveStatus}`)
       console.log(res)
       const data = res.data
       console.log(data)
@@ -160,7 +160,7 @@ export const SKU = async ({queryKey}) =>{
       console.log("packaged called")
       const{Active, Category, Product, DisplayName, Brand} = queryKey[1]
   
-      const res = await axios.get(`/Inventory/GetSKUs?DisplayName=${DisplayName}&Category=${Category}&Brand=${Brand}&Product=${Product}&ActiveStatus=${Active}&MainItemFilter=1&ReturnableItemFilter=ALL`)
+      const res = await axios.get(`/api/inventory/GetSKUs?DisplayName=${DisplayName}&Category=${Category}&Brand=${Brand}&Product=${Product}&ActiveStatus=${Active}&MainItemFilter=1&ReturnableItemFilter=ALL`)
       const packageData = res.data
       console.log("SKU", packageData.data)
       return packageData.data

@@ -111,7 +111,7 @@ MuiTextField:{
             borderRadius: 4,
             borderBottom: 1,
           },
-          
+          // Headers
           "& .MuiDataGrid-columnHeader:focus": {
             border:"none !important",
             outline: "none !important"
@@ -128,7 +128,13 @@ MuiTextField:{
             border:"none !important",
             outline: "none !important"
           },
-         
+          // Style the header of the grid
+          // '& .MuiDataGrid-columnHeader': {
+          //   backgroundColor:"#6bb2c9"
+          //  },
+          // '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
+          //   color:"white"
+          //  },
           // Edit each cell
           "& .MuiDataGrid-cell": {
             fontSize: "13px",
@@ -136,13 +142,7 @@ MuiTextField:{
           '& .MuiDataGrid-cell:focus': {
             outline: 0,
           },
-          '& .MuiDataGrid-columnHeader, .MuiDataGrid-cell': {
-           fontWeight:"bolder !important",
-           color:"black"
-            // borderRight: `1px solid ${
-            //   theme.palette.mode === 'light' ? '#f0f0f0' : '#303030'
-            // 
-          },
+        
           "& .MuiDataGrid-row.even": {
             backgroundColor: "WhiteSmoke",
           },

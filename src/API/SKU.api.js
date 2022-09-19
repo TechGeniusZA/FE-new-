@@ -8,11 +8,11 @@ import React, { useEffect, useState } from "react";
 export const getWithFilters = async ({queryKey})=>{
     console.log("Called")
     const {Active,shopID,level} = queryKey[1]
-   // console.log("API URL : " ,`/Inventory/GetSKUBrands?ActiveStatus=${Active}&ShopID=${shopID}&Level=${level}`)
+   // console.log("API URL : " ,`/inventory/GetSKUBrands?ActiveStatus=${Active}&ShopID=${shopID}&Level=${level}`)
     // level (All = 0,  global = 1,shop groping =2  ,  shop split = 3.)
     // Active (All = 0, true = 1, false = 2)
     // Shop ID is the ID of the shop
-    const res = await axios.get(`/Inventory/GetSKUBrands?ActiveStatus=${Active}&ShopID=${shopID}&Level=${level}`)
+    const res = await axios.get(`/api/inventory/GetSKUBrands?ActiveStatus=${Active}&ShopID=${shopID}&Level=${level}`)
     const data = await res.data
     return data.data
 }
@@ -24,7 +24,7 @@ export const createSKUBrand = async(myForm)=>{
 
     try {
       let res = await axios.post(
-        "/Inventory/AddEditBrand",
+        "/api/inventory/AddEditBrand",
         makingItFormDataLikeOldSchool,
         {
           headers: {
@@ -42,7 +42,7 @@ export const createSKUBrand = async(myForm)=>{
     }
 export const updateSkuBrand = async(myForm)=>{
       try{
-        let res = axios.put("/Inventory/AddEditBrand", myForm)
+        let res = axios.put("/api/inventory/AddEditBrand", myForm)
         let updatedData = res.data;
         console.log(updatedData)
         return updatedData    
@@ -62,7 +62,7 @@ export const createSKUPackage = async(myForm)=>{
   
       try {
         let res = await axios.post(
-          "/Inventory/AddEditBrand",
+          "/api/inventory/AddEditBrand",
           makingItFormDataLikeOldSchool,
           {
             headers: {
@@ -83,7 +83,7 @@ export const packagingFilters = async ({queryKey})=>{
   console.log("packaged called")
     const{Active} = queryKey[1]
 
-    const res = await axios.get(`/Inventory/GetSKUPackaging?activeStatus=${Active}`)
+    const res = await axios.get(`/api/inventory/GetSKUPackaging?activeStatus=${Active}`)
     const packageData = res.data
     console.log(packageData.data)
     return packageData.data
@@ -95,7 +95,7 @@ export const skuFilters = async ({queryKey})=>{
   console.log("packaged called")
     const{Active, Category, Product, DisplayName, Brand} = queryKey[1]
 
-    const res = await axios.get(`/Inventory/GetSKUs?DisplayName=${DisplayName}&Category=${Category}&Brand=${Brand}&Product=${Product}&ActiveStatus=${Active}&MainItemFilter=1&ReturnableItemFilter=ALL`)
+    const res = await axios.get(`/api/inventory/GetSKUs?DisplayName=${DisplayName}&Category=${Category}&Brand=${Brand}&Product=${Product}&ActiveStatus=${Active}&MainItemFilter=1&ReturnableItemFilter=ALL`)
     const packageData = res.data
     console.log("SKU", packageData.data)
     return packageData.data
@@ -108,7 +108,7 @@ export const createSKU = async(myForm)=>{
 
   try {
     let res = await axios.post(
-      "/Inventory/AddEditBrand",
+      "/api/inventory/AddEditBrand",
       makingItFormDataLikeOldSchool,
       {
         headers: {
@@ -129,7 +129,7 @@ export const createSKU = async(myForm)=>{
 export const bundleFilters =async ({queryKey})=>{
   const{Category, MainSku, MainPackSize} =queryKey[1]
 
-  const res = await axios.get(`/Inventory/GetSKUBundles?Category=${Category}&MainSKUID=${MainSku}&MainSKUPacksize=${MainPackSize}`)
+  const res = await axios.get(`/api/inventory/GetSKUBundles?Category=${Category}&MainSKUID=${MainSku}&MainSKUPacksize=${MainPackSize}`)
   const bundleData = res.data
   console.log(bundleData.data)
   return bundleData.data  
@@ -144,7 +144,7 @@ export const createSKUBundle = async(myForm)=>{
 
   try {
     let res = await axios.post(
-      "/Inventory/AddEditBrand",
+      "/api/inventory/AddEditBrand",
       makingItFormDataLikeOldSchool,
       {
         headers: {
@@ -168,7 +168,7 @@ export const getPacksizes = async ({queryKey})=>{
   try{
     console.log("called")
   const{PurchaseCategory, SKU} = queryKey[1]
-  const res = await axios.get(`/Inventory/GetPackSizes?PurchaseCategoryID=${PurchaseCategory}&MainSKUID=${SKU}&SKUPacksize=0`)
+  const res = await axios.get(`/api/inventory/GetPackSizes?PurchaseCategoryID=${PurchaseCategory}&MainSKUID=${SKU}&SKUPacksize=0`)
   const data = res.data
   console.log(data.data)
   return data.data
@@ -187,7 +187,7 @@ export const createPackSize = async(myForm)=>{
 
   try {
     let res = await axios.post(
-      "/Inventory/AddEditBrand",
+      "/api/inventory/AddEditBrand",
       makingItFormDataLikeOldSchool,
       {
         headers: {
@@ -212,7 +212,7 @@ export const createPackSize = async(myForm)=>{
     try{
       console.log("called")
     const{Active} = queryKey[1]
-    const res = await axios.get(`/Inventory/GetSKUCategoriesTree?ActiveStatus=${Active}`)
+    const res = await axios.get(`/api/inventory/GetSKUCategoriesTree?ActiveStatus=${Active}`)
     const data = res.data
     console.log(data)
     return data

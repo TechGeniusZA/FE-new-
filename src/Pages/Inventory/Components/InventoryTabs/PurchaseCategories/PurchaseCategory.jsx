@@ -78,7 +78,7 @@ function PurchaseCategory() {
       <Grid item xs={12}  >
         {isLoading ? <FieldSkeleton/> :  <Nestable
         //collapsed={true}
-        items={PurchaseCategory}
+        items={[]}
         renderItem={({ item, collapseIcon }) => (
           <>
             <div
@@ -86,7 +86,7 @@ function PurchaseCategory() {
               className="listMenu"
             >
               {collapseIcon}
-              {item.displayName}
+              {item?.displayName}
               <div style={{ position: "absolute", top: "0px", right: "0px" }}>
               <Tooltip placement={"top"} title="Add">
                 <IconButton
